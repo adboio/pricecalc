@@ -83,7 +83,7 @@
 							b = 280;
 						}
 
-						var price = Math.round((b + 0.014*income + 0.005*assets));
+						var price = Math.round((b + 0.014*income + 0.005*assets) / 12);
 
 						$('#price').text(price);
 						$('#priceRow').show();
