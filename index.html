@@ -29,9 +29,9 @@
 
 		<table>
 			<tr>
-				<th>Income</th>
-				<th>Assets</th>
-				<th>Single or Couple</th>
+				<th>Income ($ USD)</th>
+				<th>Assets ($ USD)</th>
+				<th>Single or Double</th>
 			</tr>
 			<tr>
 				<td><input type="text" id="income"></td>
@@ -49,33 +49,45 @@
 			<tr style="display: none;" id="warning">
 				<td colspan="3"><small>Please enter numbers only for income &amp; assets</small></td>
 			</tr>
+			<tr style="display: none;" id="incomeWarning">
+				<td colspan="3"><small>Income must be greater than $0</small></td>
+			</tr>
 			<tr style="display: none;" id="priceRow">
-				<td colspan="3"><strong>Price:</strong> $<span id="price"></span></td>
+				<td colspan="3"><strong>Monthly Price:</strong> $<span id="price"></span></td>
 			</tr>
 		</table>
 
 		<script>
+
 			$('#calc').on('click', function(e) {
 				e.preventDefault();
+				$('#priceRow').hide();
 
-				if (!parseInt($('#assets').val()) || !parseInt($('#income').val())) {
+				if (isNaN(parseInt($('#assets').val())) || isNaN(parseInt($('#income').val()))) {
 					$('#warning').show();
 				} else {
 					$('#warning').hide();
 
-					let assets = parseInt($('#assets').val());
-					let income = parseInt($('#income').val());
-					let sd = $('#sd option:selected').val();
+					if (parseInt($('#income').val()) == 0) {
+						$('#incomeWarning').show();
+					} else {
 
-					var b = 140;
-					if (sd == 2) {
-						b = 280;
+						$('#incomeWarning').hide();
+
+						let assets = parseInt($('#assets').val());
+						let income = parseInt($('#income').val());
+						let sd = $('#sd option:selected').val();
+
+						var b = 140;
+						if (sd == 2) {
+							b = 280;
+						}
+
+						var price = Math.round((b + 0.014*income + 0.005*assets));
+
+						$('#price').text(price);
+						$('#priceRow').show();
 					}
-
-					var price = Math.round((b + 0.014*assets + 0.005*income) * 100) / 100;
-
-					$('#price').text(price);
-					$('#priceRow').show();
 				}
 
 			});
