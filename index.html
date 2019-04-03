@@ -3,11 +3,22 @@
 	<head>
 
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 
 		<style>
 			body {
-				font-family: sans-serif;
+				font-family: 'Montserrat', sans-serif;
 				padding: 20px;
+				font-size: 30px;
+				color: #2939aa;
+			}
+
+			.vat {
+				vertical-align: top;
+			}
+
+			.vam {
+				vertical-align: middle;
 			}
 
 			table {
@@ -40,9 +51,10 @@
 				-moz-border-radius: 1px;
 				-webkit-border-radius: 1px;
 				border-radius: 1px;
-				font-size: 15px;
+				font-size: 30px;
 				color: #404040;
 				outline: none;
+				text-align: center;
 			}
 
 			.form-radio {
@@ -54,8 +66,8 @@
 			     background-color: #f1f1f1;
 			     color: #666;
 			     top: 10px;
-			     height: 30px;
-			     width: 30px;
+			     height: 50px;
+			     width: 50px;
 			     border: 0;
 			     border-radius: 50px;
 			     cursor: pointer;     
@@ -65,8 +77,8 @@
 
 			.form-radio:checked::before {
 			     position: absolute;
-			     font: 13px/1 sans-serif;
-			     left: 11px;
+			     font: 30px/1 'Montserrat', sans-serif;
+			     left: 15px;
 			     top: 7px;
 			     content: '\02143';
 			     transform: rotate(40deg);
@@ -81,7 +93,7 @@
 			}
 
 			#price {
-				font-size: 18px;
+				font-size: 30px;
 			}
 		</style>
 	</head>
@@ -94,12 +106,24 @@
 				<td><strong>Assets</strong><br/><input type="text" id="assets"></td>
 			</tr>
 			<tr style="margin-top: 20px;">
-				<td>
-					<strong>Single</strong>&nbsp;&nbsp;or&nbsp;&nbsp;<strong>Couple</strong><br/>
-					<input type="radio" name="which" value="1" class="form-radio" style="margin-right: 40px;" checked="true">
-					<input type="radio" name="which" value="2" class="form-radio">
+				<td class="vat">
+					<strong>Single</strong>&nbsp;&nbsp;or&nbsp;&nbsp;<strong>Couple</strong>
+
 				</td>
-				<td><strong>Monthly Price:</strong><br/><br/><span id="price"></span></td>
+				<td class="vat">
+
+					<strong>Monthly Price:</strong>
+
+				</td>
+			</tr>
+
+			<tr>
+				<td class="vam">
+					<input type="radio" name="which" value="1" class="form-radio" style="margin-right: 70px;" checked="true">
+					<input type="radio" name="which" value="2" class="form-radio">
+
+				</td>
+				<td class="vam"><span id="price"></span></td>
 			</tr>
 			<tr style="display: none;" id="warning">
 				<td colspan="3"><small>Please enter valid values for income &amp; assets</small></td>
