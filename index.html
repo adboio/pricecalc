@@ -198,8 +198,10 @@
 					// calculate price
 					var price = Math.round((b + 0.014*income + 0.005*assets) / 12);
 
+					var finalPrice = Math.max(99, price);
+
 					// update price text
-					$('#price').text('$' + price);
+					$('#price').text('$' + finalPrice);
 					$('#priceRow').show();
 				}
  			}
