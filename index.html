@@ -42,7 +42,7 @@
 				padding: 8px 12px;
 				width: 100%;
 				margin-top: 5px;
-				background: #fff;
+				background: #ffffff;
 				border: 1px solid #d9d9d9;
 				border-top: 1px solid #c0c0c0;
 				-moz-box-sizing: border-box;
@@ -126,19 +126,6 @@
 				<td class="vam"><span id="price"></span></td>
 			</tr>
 
-
-
-			<!-- START ERROR MESSAGE ROWS -->
-			<tr style="display: none;" id="warning">
-				<td colspan="3"><small>Please enter valid values for income &amp; assets</small></td>
-			</tr>
-			<tr style="display: none;" id="incomeWarning">
-				<td colspan="3"><small>Income must be greater than $0</small></td>
-			</tr>
-			<!-- END ERROR MESSAGE ROWS -->
-
-
-
 		</table>
 
 		<script>
@@ -150,51 +137,76 @@
  			});
 
  			function calcPrice() {
-				$('#priceRow').hide();
 
-				// this if statement checks that the entries are numeric, sans commas and dollar signs
-				if (isNaN(parseInt($('#assets').val().replace(',', '').replace('$', ''))) || isNaN(parseInt($('#income').val().replace(',', '').replace('$', '')))) {
-					$('#warning').show();
+ 				console.log($('#income').val().split('$').join('').split(',').join(''));
+
+				// $('#priceRow').hide();
+
+				var valid = true;
+				var inputGreaterThanZero = true;
+
+				if (isNaN(parseInt($('#assets').val().split('$').join('').split(',').join('')))) {
+					$('#assets').css('background-color', '#ffdddd');
+					valid = false;
+
+					$('#price').text('$');
 				} else {
-					$('#warning').hide();
+					$('#assets').css('background-color', '#ffffff');
+				}
 
-					// this if statement checks if income > 0
-					if (parseInt($('#income').val()) == 0) {
-						$('#incomeWarning').show();
+				if (isNaN(parseInt($('#income').val().split('$').join('').split(',').join('')))) {
+					$('#income').css('background-color', '#ffdddd');
+					valid = false;
+
+					$('#price').text('$');
+				} else {
+					$('#income').css('background-color', '#ffffff');
+
+					if (parseInt($('#income').val().split('$').join('').split(',').join('')) == 0) {
+						inputGreaterThanZero = false;
+						$('#income').css('background-color', '#ffdddd');
+
+						$('#price').text('$');
 					} else {
-
-						// if we made it past those two if statements,
-						// we can calculate the price
-
-						// hide the warning
-						$('#incomeWarning').hide();
-
-						// get asset & income values
-						let assets = parseInt($('#assets').val().replace(',', '').replace('$', ''));
-						let income = parseInt($('#income').val().replace(',', '').replace('$', ''));
-
-						// get which radio button is checked
-						let sd = $("input[name='which']:checked").val();
-
-						// determine intercept based on radio button
-						var b = 140;
-						if (sd == 2) {
-							b = 280;
-						}
-
-						// calculate price
-						var price = Math.round((b + 0.014*income + 0.005*assets) / 12);
-
-						// update price text
-						$('#price').text('$' + price);
-						$('#priceRow').show();
+						$('#income').css('background-color', '#ffffff');
 					}
+
+				}
+
+
+				if (valid && inputGreaterThanZero) {
+
+					// if we made it past those two if statements,
+					// we can calculate the price
+
+					// hide the warning
+					$('#incomeWarning').hide();
+
+					// get asset & income values
+					let assets = parseInt($('#assets').val().split('$').join('').split(',').join(''));
+					let income = parseInt($('#income').val().split('$').join('').split(',').join(''));
+
+					// get which radio button is checked
+					let sd = $("input[name='which']:checked").val();
+
+					// determine intercept based on radio button
+					var b = 140;
+					if (sd == 2) {
+						b = 280;
+					}
+
+					// calculate price
+					var price = Math.round((b + 0.014*income + 0.005*assets) / 12);
+
+					// update price text
+					$('#price').text('$' + price);
+					$('#priceRow').show();
 				}
  			}
 
  			// the following 3 functions call the calcPrice() function
  			// any time an input changes
- 			
+
  			$('#income').on('input', function(e) {
  				e.preventDefault();
  				calcPrice();
